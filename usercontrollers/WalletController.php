@@ -15,7 +15,15 @@ class WalletController {
      */
     public function getWalletBalance($user_id) {
         try {
-            $stmt = $this->conn->prepare("...");
+            $stmt = $this->conn->prepare("
+                SELECT 
+                    balance as available_balance,
+                    balance + IFNULL(referral_bonus_balance, 0) as total_balance,
+                    IFNULL(referral_bonus_balance, 0) as referral_bonus_balance,
+                    withdrawal_limit
+                FROM users 
+                WHERE id = ?
+            ");
             $stmt->execute([$user_id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -23,7 +31,12 @@ class WalletController {
                 throw new Exception("User wallet not found");
             }
             
-            return $result;
+            return [
+                'balance' => $result['available_balance'],
+                'total_balance' => $result['total_balance'],
+                'referral_bonus_balance' => $result['referral_bonus_balance'],
+                'withdrawal_limit' => $result['withdrawal_limit']
+            ];
         } catch (PDOException $e) {
             error_log("Database error: " . $e->getMessage());
             return false;

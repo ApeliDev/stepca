@@ -38,11 +38,11 @@ $recentTransactions = $wallet->getRecentTransactions($user_id);
 $fullHistory = $wallet->getTransactionHistory($user_id, 20);
 
 // Withdrawal data
-$total_balance = $withdrawal->getTotalBalance($user);
-$max_withdrawal = $withdrawal->getMaxWithdrawalAmount($user);
+$total_balance = $walletBalance['total_balance'];
+$max_withdrawal = min($total_balance, $user['withdrawal_limit']);
 
 // Transfer data
-$transfer_balance = $transfer->getAvailableBalance($user_id);
+$transfer_balance = $walletBalance['balance'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -274,6 +274,7 @@ $transfer_balance = $transfer->getAvailableBalance($user_id);
         </div>
     </div>
 
-    <script src="assets/js/wallet.js"></script>
+   
     <script src="assets/js/main.js"></script>
 </body>
+</html>
