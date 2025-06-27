@@ -1,0 +1,42 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Remove .php extension from URLs
+    # Example: /about.php -> /about
+    
+    # 1. Redirect external .php requests to extensionless URL
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+    RewriteRule ^ %1 [R=301,L]
+    
+    # 2. Handle extensionless PHP files internally
+    # a. Check if the request is for a valid file
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # b. Check if the request is for a valid directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # c. Check if the request is for a PHP file that exists
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    # d. Rewrite to include the .php extension internally
+    RewriteRule ^(.*)$ $1.php [L]
+    
+    # 3. Prevent directory listing
+    Options -Indexes
+    
+    # 4. Security enhancements
+    <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql)$">
+        Order Allow,Deny
+        Deny from all
+    </FilesMatch>
+    
+    # 5. Custom error documents
+    ErrorDocument 404 /404
+    ErrorDocument 403 /403
+    ErrorDocument 500 /500
+    
+    # 6. Force HTTPS (uncomment if needed)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # 7. Remove trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+</IfModule>

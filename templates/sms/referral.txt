@@ -1,0 +1,1 @@
+Congratulations {name}! You've earned KES {amount} for referring {referred_name}. Your total earnings: KES {total_earnings}. Keep sharing your link: {referral_link}

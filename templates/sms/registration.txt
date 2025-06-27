@@ -1,0 +1,1 @@
+Hello {name}, welcome to <?php echo SITE_NAME; ?>! Your account has been created. Complete your registration by paying KES 500 via M-PESA to activate your account and start earning from referrals. Your referral code: {referral_code}

@@ -1,0 +1,1 @@
+Dear {name}, your payment of KES {amount} has been received. Your account is now active! Start sharing your referral link: {referral_link} to earn KES 200 per successful referral.
