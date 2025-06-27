@@ -345,3 +345,122 @@ CREATE TABLE payment_tokens (
     INDEX (token),
     INDEX (expires_at)
 );
+
+
+
+CREATE TABLE `exchange_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `base_currency` varchar(3) NOT NULL DEFAULT 'USD',
+  `target_currency` varchar(3) NOT NULL,
+  `buy_rate` decimal(15,6) NOT NULL,
+  `sell_rate` decimal(15,6) NOT NULL,
+  `mid_rate` decimal(15,6) NOT NULL,
+  `source` varchar(50) DEFAULT 'central_bank' COMMENT 'central_bank, market, manual',
+  `is_active` tinyint(1) DEFAULT 1,
+  `valid_from` datetime NOT NULL,
+  `valid_to` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `currency_pair` (`base_currency`,`target_currency`,`valid_from`),
+  KEY `is_active` (`is_active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `investment_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `currency` varchar(3) NOT NULL DEFAULT 'USD',
+  `min_investment_amount` decimal(15,2) NOT NULL,
+  `max_investment_amount` decimal(15,2) DEFAULT NULL,
+  `expected_return_rate` decimal(5,2) NOT NULL COMMENT 'Annual percentage rate',
+  `return_period_days` int(11) NOT NULL COMMENT 'Investment duration in days',
+  `risk_level` enum('low','medium','high') NOT NULL DEFAULT 'medium',
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `is_active` (`is_active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `order_type` enum('buy','sell') NOT NULL,
+  `currency_pair` varchar(7) NOT NULL COMMENT 'Format: USD/KES',
+  `amount` decimal(15,2) NOT NULL COMMENT 'Amount in base currency',
+  `rate` decimal(15,6) NOT NULL,
+  `total_amount` decimal(15,2) NOT NULL COMMENT 'Amount in target currency',
+  `status` enum('pending','processing','completed','failed','cancelled') NOT NULL DEFAULT 'pending',
+  `payment_method` enum('mpesa','bank_transfer','crypto_wallet','card') NOT NULL,
+  `payment_reference` varchar(100) DEFAULT NULL,
+  `payment_confirmed` tinyint(1) DEFAULT 0,
+  `wallet_address` varchar(255) DEFAULT NULL COMMENT 'For crypto transfers',
+  `transaction_hash` varchar(255) DEFAULT NULL COMMENT 'For blockchain transactions',
+  `platform` enum('crypto','deriv','local') NOT NULL DEFAULT 'local' COMMENT 'Where the funds will be sent',
+  `platform_reference` varchar(255) DEFAULT NULL COMMENT 'Reference ID on the target platform',
+  `notes` text DEFAULT NULL,
+  `completed_at` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `status` (`status`),
+  KEY `order_type` (`order_type`),
+  KEY `currency_pair` (`currency_pair`),
+  CONSTRAINT `orders_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `investments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `currency` varchar(3) NOT NULL DEFAULT 'USD',
+  `expected_return_amount` decimal(15,2) NOT NULL,
+  `start_date` date NOT NULL,
+  `maturity_date` date NOT NULL,
+  `status` enum('active','matured','cancelled','withdrawn') NOT NULL DEFAULT 'active',
+  `payout_method` enum('wallet','bank','crypto') NOT NULL DEFAULT 'wallet',
+  `payout_reference` varchar(255) DEFAULT NULL COMMENT 'Transaction hash or bank reference',
+  `payout_confirmed` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `product_id` (`product_id`),
+  KEY `status` (`status`),
+  CONSTRAINT `investments_product_fk` FOREIGN KEY (`product_id`) REFERENCES `investment_products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `investments_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `platform_accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `platform_type` enum('crypto','deriv','forex') NOT NULL,
+  `platform_name` varchar(50) NOT NULL COMMENT 'Binance, Deriv, etc',
+  `account_id` varchar(255) NOT NULL COMMENT 'Platform-specific account ID',
+  `api_key` varchar(255) DEFAULT NULL COMMENT 'Encrypted API key',
+  `api_secret` varchar(255) DEFAULT NULL COMMENT 'Encrypted API secret',
+  `is_active` tinyint(1) DEFAULT 1,
+  `last_sync` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_platform` (`user_id`,`platform_type`,`platform_name`),
+  CONSTRAINT `platform_accounts_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `wallet_balances` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `currency` varchar(3) NOT NULL,
+  `available_balance` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `locked_balance` decimal(15,2) NOT NULL DEFAULT 0.00 COMMENT 'For pending transactions',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_currency` (`user_id`,`currency`),
+  CONSTRAINT `wallet_balances_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

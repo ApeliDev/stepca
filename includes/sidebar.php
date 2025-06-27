@@ -4,7 +4,6 @@
     <i id="menu-icon" class="fas fa-bars text-lg transition-transform duration-200 group-aria-expanded:rotate-90"></i>
 </button>
 
-
 <!-- Sidebar -->
 <div id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-darker/95 backdrop-blur-sm border-r border-primary/20 transform -translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-0">
     <div class="flex flex-col h-full">
@@ -20,26 +19,100 @@
 
         <!-- Navigation -->
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <!-- Dashboard -->
             <a href="account.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'account.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
                 <i class="fas fa-tachometer-alt mr-3 text-lg"></i>
                 <span class="font-medium">Dashboard</span>
             </a>
             
-            <a href="withdraw.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'withdraw.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
-                <i class="fas fa-money-bill-wave mr-3 text-lg"></i>
-                <span class="font-medium">Withdraw</span>
+            <!-- Currency Exchange -->
+            <div class="group">
+                <button class="w-full flex items-center justify-between px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
+                    <div class="flex items-center">
+                        <i class="fas fa-exchange-alt mr-3 text-lg"></i>
+                        <span class="font-medium">Currency Exchange</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-[.active]:rotate-180"></i>
+                </button>
+                <div class="hidden group-[.active]:block pl-4 mt-1 space-y-1">
+                    <a href="exchange-buy.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['exchange-buy.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-dollar-sign mr-3 text-sm"></i>
+                        <span>Buy Dollars</span>
+                    </a>
+                    <a href="exchange-sell.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['exchange-sell.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-money-bill-wave mr-3 text-sm"></i>
+                        <span>Sell Dollars</span>
+                    </a>
+                    <a href="exchange-history.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['exchange-history.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-history mr-3 text-sm"></i>
+                        <span>Exchange History</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Investments -->
+            <div class="group">
+                <button class="w-full flex items-center justify-between px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
+                    <div class="flex items-center">
+                        <i class="fas fa-piggy-bank mr-3 text-lg"></i>
+                        <span class="font-medium">Investments</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-[.active]:rotate-180"></i>
+                </button>
+                <div class="hidden group-[.active]:block pl-4 mt-1 space-y-1">
+                    <a href="investments.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['investments.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-chart-pie mr-3 text-sm"></i>
+                        <span>My Investments</span>
+                    </a>
+                    <a href="invest-products.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['invest-products.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-box-open mr-3 text-sm"></i>
+                        <span>Investment Products</span>
+                    </a>
+                    <a href="invest-history.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['invest-history.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-receipt mr-3 text-sm"></i>
+                        <span>Investment History</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Platform Transfers -->
+            <div class="group">
+                <button class="w-full flex items-center justify-between px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
+                    <div class="flex items-center">
+                        <i class="fas fa-random mr-3 text-lg"></i>
+                        <span class="font-medium">Platform Transfers</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-[.active]:rotate-180"></i>
+                </button>
+                <div class="hidden group-[.active]:block pl-4 mt-1 space-y-1">
+                    <a href="transfer-crypto.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['transfer-crypto.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fab fa-bitcoin mr-3 text-sm"></i>
+                        <span>To Crypto Wallet</span>
+                    </a>
+                    <a href="transfer-deriv.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['transfer-deriv.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-exchange-alt mr-3 text-sm"></i>
+                        <span>To Deriv Account</span>
+                    </a>
+                    <a href="transfer-history.php" class="<?php echo in_array(basename($_SERVER['PHP_SELF']), ['transfer-history.php']) ? 'flex items-center px-4 py-2 text-primary bg-primary/10 rounded-lg border border-primary/20' : 'flex items-center px-4 py-2 text-lightGray rounded-lg hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                        <i class="fas fa-history mr-3 text-sm"></i>
+                        <span>Transfer History</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Wallet -->
+            <a href="wallet.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'wallet.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+                <i class="fas fa-wallet mr-3 text-lg"></i>
+                <span class="font-medium">My Wallet</span>
             </a>
             
-            <a href="transfer.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'transfer.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
-                <i class="fas fa-exchange-alt mr-3 text-lg"></i>
-                <span class="font-medium">Transfer</span>
-            </a>
-            
+            <!-- Referrals -->
             <a href="referrals.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'referrals.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
                 <i class="fas fa-users mr-3 text-lg"></i>
                 <span class="font-medium">Referrals</span>
             </a>
             
+            <!-- Notifications -->
             <a href="notifications.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'notifications.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
                 <i class="fas fa-bell mr-3 text-lg"></i>
                 <span class="font-medium">Notifications</span>
@@ -50,25 +123,6 @@
                 if ($unread > 0): ?>
                 <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full"><?php echo $unread; ?></span>
                 <?php endif; ?>
-            </a>
-            
-            <a href="#deriv.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'deriv.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
-                <i class="fas fa-chart-line mr-3 text-lg"></i>
-                <span class="font-medium">Deriv</span>
-                <span class="ml-auto bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full">Soon</span>
-            </a>
-            
-
-            <a href="#earnings.php#" class="<?php echo basename($_SERVER['PHP_SELF']) == 'earnings.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
-                <i class="fas fa-piggy-bank mr-3 text-lg"></i>
-                <span class="font-medium">Investpool</span>
-                <span class="ml-auto bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full">Soon</span>
-            </a>
-
-            <a href="#p2p.php#" class="<?php echo basename($_SERVER['PHP_SELF']) == 'p2p.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
-                <i class="fas fa-handshake mr-3 text-lg"></i>
-                <span class="font-medium">P2P</span>
-                <span class="ml-auto bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full">Soon</span>
             </a>
         </nav>
 
