@@ -2,10 +2,6 @@
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
-require_once 'usercontrollers/WalletController.php';
-require_once 'usercontrollers/Withdrawal.php';
-require_once 'usercontrollers/Transfer.php';
-
 $db = new Database();
 $conn = $db->connect();
 
@@ -21,28 +17,73 @@ $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Check if user has paid registration fee
+// Check if user has paid registration fee if not redirect to payment page
 if ($user['is_active'] == 0 && basename($_SERVER['PHP_SELF']) != 'payment.php') {
     header('Location: payment.php');
     exit;
 }
 
-// Initialize controllers
-$wallet = new WalletController();
-$withdrawal = new Withdrawal();
-$transfer = new Transfer();
-
-// Get wallet data
-$walletBalance = $wallet->getWalletBalance($user_id);
-$recentTransactions = $wallet->getRecentTransactions($user_id);
-$fullHistory = $wallet->getTransactionHistory($user_id, 20);
-
-// Withdrawal data
-$total_balance = $walletBalance['total_balance'];
+// Get wallet balances
+$total_balance = $user['balance'] + $user['referral_bonus_balance'];
 $max_withdrawal = min($total_balance, $user['withdrawal_limit']);
 
-// Transfer data
-$transfer_balance = $walletBalance['balance'];
+// Get recent transactions
+$stmt = $conn->prepare("
+    (SELECT 'withdrawal' as type, amount, status, created_at, phone as destination 
+    FROM withdrawals 
+    WHERE user_id = ? 
+    ORDER BY created_at DESC 
+    LIMIT 5)
+    
+    UNION ALL
+    
+    (SELECT 'transfer' as type, amount, status, created_at, receiver_phone as destination 
+    FROM transfers 
+    WHERE sender_id = ? 
+    ORDER BY created_at DESC 
+    LIMIT 5)
+    
+    ORDER BY created_at DESC 
+    LIMIT 5
+");
+$stmt->execute([$user_id, $user_id]);
+$recentTransactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get full transaction history
+$stmt = $conn->prepare("
+    (SELECT 'withdrawal' as type, amount, status, created_at, phone as destination 
+    FROM withdrawals 
+    WHERE user_id = ?)
+    
+    UNION ALL
+    
+    (SELECT 'transfer' as type, amount, status, created_at, receiver_phone as destination 
+    FROM transfers 
+    WHERE sender_id = ?)
+    
+    ORDER BY created_at DESC 
+    LIMIT 20
+");
+$stmt->execute([$user_id, $user_id]);
+$fullHistory = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get total withdrawn
+$stmt = $conn->prepare("SELECT COALESCE(SUM(amount), 0) as total FROM withdrawals WHERE user_id = ? AND status = 'completed'");
+$stmt->execute([$user_id]);
+$total_withdrawn = $stmt->fetchColumn();
+
+// Get referral stats
+$stmt = $conn->prepare("SELECT COUNT(*) FROM referrals WHERE referrer_id = ?");
+$stmt->execute([$user_id]);
+$total_referrals = $stmt->fetchColumn();
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM referrals r JOIN users u ON r.referred_id = u.id WHERE r.referrer_id = ? AND u.is_active = 1");
+$stmt->execute([$user_id]);
+$active_referrals = $stmt->fetchColumn();
+
+$stmt = $conn->prepare("SELECT COALESCE(SUM(amount), 0) FROM referral_earnings WHERE user_id = ?");
+$stmt->execute([$user_id]);
+$total_earned = $stmt->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,7 +158,7 @@ $transfer_balance = $walletBalance['balance'];
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-lightGray mb-1">Total Balance</p>
-                                <h3 class="text-2xl font-bold">KES <?php echo number_format($walletBalance['total_balance'], 2); ?></h3>
+                                <h3 class="text-2xl font-bold">KES <?php echo number_format($total_balance, 2); ?></h3>
                             </div>
                             <div class="bg-primary/10 p-3 rounded-xl">
                                 <i class="fas fa-wallet text-primary text-xl"></i>
@@ -130,7 +171,7 @@ $transfer_balance = $walletBalance['balance'];
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-lightGray mb-1">Available Balance</p>
-                                <h3 class="text-2xl font-bold">KES <?php echo number_format($walletBalance['balance'], 2); ?></h3>
+                                <h3 class="text-2xl font-bold">KES <?php echo number_format($user['balance'], 2); ?></h3>
                             </div>
                             <div class="bg-green-500/10 p-3 rounded-xl">
                                 <i class="fas fa-coins text-green-500 text-xl"></i>
@@ -143,7 +184,7 @@ $transfer_balance = $walletBalance['balance'];
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-lightGray mb-1">Referral Bonus</p>
-                                <h3 class="text-2xl font-bold">KES <?php echo number_format($walletBalance['referral_bonus_balance'], 2); ?></h3>
+                                <h3 class="text-2xl font-bold">KES <?php echo number_format($user['referral_bonus_balance'], 2); ?></h3>
                             </div>
                             <div class="bg-blue-500/10 p-3 rounded-xl">
                                 <i class="fas fa-users text-blue-500 text-xl"></i>
@@ -183,7 +224,7 @@ $transfer_balance = $walletBalance['balance'];
                         </div>
                         <p class="text-sm text-lightGray mb-4">Send money to other Stepcashier users</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm">Max: KES <?php echo number_format($transfer_balance, 2); ?></span>
+                            <span class="text-sm">Max: KES <?php echo number_format($user['balance'], 2); ?></span>
                             <a href="transfer.php" class="px-4 py-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors text-sm font-medium">
                                 Transfer Now
                             </a>
@@ -234,7 +275,7 @@ $transfer_balance = $walletBalance['balance'];
                                                    'fa-wallet'); ?>"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-medium"><?php echo $wallet->formatTransactionType($transaction['type']); ?></h4>
+                                            <h4 class="font-medium"><?php echo ucfirst($transaction['type']); ?></h4>
                                             <p class="text-xs text-lightGray">
                                                 <?php echo date('M j, Y', strtotime($transaction['created_at'])); ?>
                                                 <?php if ($transaction['destination']): ?>
@@ -247,7 +288,12 @@ $transfer_balance = $walletBalance['balance'];
                                         <p class="font-semibold <?php echo $transaction['type'] === 'withdrawal' ? 'text-red-400' : 'text-white'; ?>">
                                             <?php echo $transaction['type'] === 'withdrawal' ? '-' : ''; ?>KES <?php echo number_format($transaction['amount'], 2); ?>
                                         </p>
-                                        <?php echo $wallet->getStatusBadge($transaction['status']); ?>
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
+                                            <?php echo $transaction['status'] == 'completed' ? 'bg-green-500/20 text-green-400' : 
+                                               ($transaction['status'] == 'failed' ? 'bg-red-500/20 text-red-400' : 
+                                               'bg-yellow-500/20 text-yellow-400'); ?>">
+                                            <?php echo ucfirst($transaction['status']); ?>
+                                        </span>
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
@@ -270,9 +316,38 @@ $transfer_balance = $walletBalance['balance'];
                         <?php endif; ?>
                     </div>
                 </div>
+
+                <!-- Referral Stats -->
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-darker/60 backdrop-blur-sm rounded-2xl border border-primary/20 p-6 text-center animate-scaleIn" style="animation-delay: 0.3s;">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2"><?php echo $total_referrals; ?></h4>
+                        <p class="text-lightGray text-sm">Total Referrals</p>
+                    </div>
+
+                    <div class="bg-darker/60 backdrop-blur-sm rounded-2xl border border-primary/20 p-6 text-center animate-scaleIn" style="animation-delay: 0.4s;">
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hand-holding-usd text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2"><?php echo $active_referrals; ?></h4>
+                        <p class="text-lightGray text-sm">Active Referrals</p>
+                    </div>
+
+                    <div class="bg-darker/60 backdrop-blur-sm rounded-2xl border border-primary/20 p-6 text-center animate-scaleIn" style="animation-delay: 0.5s;">
+                        <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-coins text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2">KES <?php echo number_format($total_earned, 2); ?></h4>
+                        <p class="text-lightGray text-sm">Total Earned</p>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
+
+    <script src="assets/js/wallet.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
