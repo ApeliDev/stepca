@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'db.php';
-require_once 'notifications.php';
+
 
 class MpesaPayment {
     private $consumerKey;
