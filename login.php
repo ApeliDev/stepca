@@ -8,7 +8,7 @@ require_once 'components/auth_layout.php';
 require_once 'components/auth_form_elements.php';
 
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: account.php');
     exit;
 }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$emailOrPhone, $emailOrPhone]);
                 
                 // Redirect to dashboard
-                header('Location: dashboard.php');
+                header('Location: account.php');
                 exit;
             } elseif (isset($loginResult['needs_payment']) && $loginResult['needs_payment']) {
                 // Direct redirect to payment page - no JSON response

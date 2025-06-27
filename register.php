@@ -9,7 +9,7 @@ require_once 'components/auth_layout.php';
 require_once 'components/auth_form_elements.php';
 
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: home.php');
     exit;
 }
 
