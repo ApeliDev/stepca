@@ -70,9 +70,7 @@ function loginUser($emailOrPhone, $password) {
         return ['success' => false, 'message' => 'Invalid email/phone or password'];
     }
 
-    // TEMPORARILY BYPASS ACTIVE CHECK - Allow login regardless of payment status
-    // Original payment check code preserved but commented out:
-    /*
+    // If account is not active, generate payment token
     if (!$user['is_active']) {
         // Generate a secure one-time token for payment
         $paymentToken = bin2hex(random_bytes(32));
@@ -90,7 +88,6 @@ function loginUser($emailOrPhone, $password) {
             'payment_url' => BASE_URL . '/complete_payment.php?token=' . $paymentToken
         ];
     }
-    */
 
     // Login successful - set session variables
     $_SESSION['user_id'] = $user['id'];
@@ -123,6 +120,7 @@ function validateCSRFToken($token) {
            isset($token) && 
            hash_equals($_SESSION['csrf_token'], $token);
 }
+
 
 function rateLimit($action, $limit = 5, $timeout = 60) {
     $key = "rate_limit_{$action}_" . $_SERVER['REMOTE_ADDR'];
@@ -160,6 +158,7 @@ function logoutUser() {
     session_destroy();
 }
 
+
 function generatePasswordResetToken($email) {
     $db = (new Database())->connect();
     
@@ -177,7 +176,6 @@ function generatePasswordResetToken($email) {
     
     $stmt = $db->prepare("DELETE FROM password_resets WHERE user_id = ?");
     $stmt->execute([$user['id']]);
-    
     $stmt = $db->prepare("
         INSERT INTO password_resets (user_id, token, expires_at, created_at) 
         VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 15 MINUTE), NOW())
@@ -189,7 +187,6 @@ function generatePasswordResetToken($email) {
 
 function validatePasswordResetToken($token) {
     $db = (new Database())->connect();
-    
     // Check if token exists and is not expired
     $stmt = $db->prepare("SELECT user_id FROM password_resets WHERE token = ? AND expires_at > NOW()");
     $stmt->execute([$token]);
@@ -197,6 +194,7 @@ function validatePasswordResetToken($token) {
     
     return $result ? $result['user_id'] : false;
 }
+
 
 function resetUserPassword($userId, $newPassword) {
     $db = (new Database())->connect();
@@ -223,5 +221,6 @@ function clearExpiredPasswordResetTokens() {
     $stmt = $db->prepare("DELETE FROM password_resets WHERE expires_at <= NOW()");
     return $stmt->execute();
 }
+
 
 ?>

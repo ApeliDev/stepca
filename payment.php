@@ -22,7 +22,7 @@ if (!$user) {
 
 // Redirect if already active
 if ($user['is_active']) {
-    header('Location: dashboard.php');
+    header('Location: account.php');
     exit;
 }
 
