@@ -141,3 +141,34 @@
 
 <!-- Mobile Sidebar Overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 md:hidden hidden"></div>
+
+<script>
+    // Dropdown toggle functionality
+    const dropdowns = document.querySelectorAll('[data-dropdown]');
+    
+    dropdowns.forEach(dropdown => {
+        const button = dropdown.querySelector('[data-dropdown-button]');
+        const content = dropdown.querySelector('[data-dropdown-content]');
+        const chevron = dropdown.querySelector('[data-dropdown-chevron]');
+        
+        button.addEventListener('click', () => {
+            // Toggle the active class on the parent group
+            dropdown.classList.toggle('active');
+            
+            // Toggle visibility of dropdown content
+            content.classList.toggle('hidden');
+            
+            // Rotate chevron icon
+            chevron.classList.toggle('rotate-180');
+            
+            // Close other open dropdowns
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                    otherDropdown.classList.remove('active');
+                    otherDropdown.querySelector('[data-dropdown-content]').classList.add('hidden');
+                    otherDropdown.querySelector('[data-dropdown-chevron]').classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+</script>
