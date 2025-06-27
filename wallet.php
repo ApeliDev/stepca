@@ -98,14 +98,7 @@ $transfer_balance = $transfer->getAvailableBalance($user_id);
     </script>
 </head>
 <body class="bg-gradient-to-br from-dark via-darker to-darkest min-h-screen text-white">
-    <!-- Animated Background -->
-    <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-[10%] left-[10%] text-primary opacity-5 text-2xl animate-float"><i class="fas fa-coins"></i></div>
-        <div class="absolute top-[20%] right-[10%] text-primary opacity-5 text-2xl animate-float" style="animation-delay: 1s;"><i class="fas fa-wallet"></i></div>
-        <div class="absolute bottom-[30%] left-[15%] text-primary opacity-5 text-2xl animate-float" style="animation-delay: 2s;"><i class="fas fa-money-bill-wave"></i></div>
-        <div class="absolute bottom-[10%] right-[20%] text-primary opacity-5 text-2xl animate-float" style="animation-delay: 3s;"><i class="fas fa-exchange-alt"></i></div>
-    </div>
-
+   
     <div class="flex h-screen relative z-10">
         <!-- Sidebar -->
         <?php include 'includes/sidebar.php'; ?>

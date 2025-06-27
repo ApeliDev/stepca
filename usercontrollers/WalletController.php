@@ -14,16 +14,20 @@ class WalletController {
      * Get wallet balance for a user
      */
     public function getWalletBalance($user_id) {
-        $stmt = $this->conn->prepare("
-            SELECT 
-                balance,
-                referral_bonus_balance,
-                (balance + referral_bonus_balance) as total_balance
-            FROM users 
-            WHERE id = ?
-        ");
-        $stmt->execute([$user_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->conn->prepare("...");
+            $stmt->execute([$user_id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$result) {
+                throw new Exception("User wallet not found");
+            }
+            
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
