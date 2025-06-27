@@ -38,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     dropdownGroups.forEach(group => {
         const button = group.querySelector('button');
-        const dropdown = group.querySelector('div[class*="hidden"]');
-        const chevronIcon = group.querySelector('.fa-chevron-down');
+        const dropdown = group.querySelector('div.hidden');
         
         if (button && dropdown) {
             button.addEventListener('click', function(e) {
@@ -47,38 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Close other dropdowns first
                 dropdownGroups.forEach(otherGroup => {
-                    if (otherGroup !== group) {
-                        const otherDropdown = otherGroup.querySelector('div[class*="hidden"]');
-                        const otherChevron = otherGroup.querySelector('.fa-chevron-down');
-                        
-                        if (otherDropdown && !otherDropdown.classList.contains('hidden')) {
-                            otherDropdown.classList.add('hidden');
-                            otherDropdown.classList.remove('block');
-                            otherGroup.classList.remove('active');
-                            if (otherChevron) {
-                                otherChevron.classList.remove('rotate-180');
-                            }
-                        }
+                    if (otherGroup !== group && otherGroup.classList.contains('active')) {
+                        otherGroup.classList.remove('active');
                     }
                 });
                 
                 // Toggle current dropdown
-                const isHidden = dropdown.classList.contains('hidden');
-                
-                if (isHidden) {
-                    dropdown.classList.remove('hidden');
-                    dropdown.classList.add('block');
-                    group.classList.add('active');
-                    if (chevronIcon) {
-                        chevronIcon.classList.add('rotate-180');
-                    }
-                } else {
-                    dropdown.classList.add('hidden');
-                    dropdown.classList.remove('block');
+                if (group.classList.contains('active')) {
                     group.classList.remove('active');
-                    if (chevronIcon) {
-                        chevronIcon.classList.remove('rotate-180');
-                    }
+                } else {
+                    group.classList.add('active');
                 }
             });
         }
@@ -100,17 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const links = group.querySelectorAll('a');
             links.forEach(link => {
                 if (link.href.includes(currentPage)) {
-                    const dropdown = group.querySelector('div[class*="hidden"]');
-                    const chevronIcon = group.querySelector('.fa-chevron-down');
-                    
-                    if (dropdown) {
-                        dropdown.classList.remove('hidden');
-                        dropdown.classList.add('block');
-                        group.classList.add('active');
-                        if (chevronIcon) {
-                            chevronIcon.classList.add('rotate-180');
-                        }
-                    }
+                    group.classList.add('active');
                 }
             });
         });
@@ -151,16 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!clickedInsideSidebar && !clickedToggleBtn && open) {
                 // Close any open dropdowns when sidebar is closed
                 dropdownGroups.forEach(group => {
-                    const dropdown = group.querySelector('div[class*="hidden"]');
-                    const chevronIcon = group.querySelector('.fa-chevron-down');
-                    
-                    if (dropdown && !dropdown.classList.contains('hidden')) {
-                        dropdown.classList.add('hidden');
-                        dropdown.classList.remove('block');
+                    if (group.classList.contains('active')) {
                         group.classList.remove('active');
-                        if (chevronIcon) {
-                            chevronIcon.classList.remove('rotate-180');
-                        }
                     }
                 });
             }
@@ -176,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add smooth transitions for dropdowns
     dropdownGroups.forEach(group => {
-        const dropdown = group.querySelector('div[class*="hidden"]');
+        const dropdown = group.querySelector('div.hidden');
         if (dropdown) {
             dropdown.style.transition = 'all 0.3s ease-in-out';
         }
