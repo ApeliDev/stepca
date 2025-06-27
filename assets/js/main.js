@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function() {
     // Sidebar/mobile menu logic
     const toggleBtn = document.getElementById('mobile-menu-toggle');
     const sidebar = document.getElementById('sidebar');
