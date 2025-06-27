@@ -20,7 +20,7 @@
 
         <!-- Navigation -->
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            <a href="dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
+            <a href="account.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'account.php' ? 'flex items-center px-4 py-3 text-primary bg-primary/10 rounded-xl border border-primary/20' : 'flex items-center px-4 py-3 text-lightGray rounded-xl hover:bg-primary/10 hover:text-primary'; ?> transition-all">
                 <i class="fas fa-tachometer-alt mr-3 text-lg"></i>
                 <span class="font-medium">Dashboard</span>
             </a>
