@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $payout_method = $_POST['payout_method'];
         
         // Validate input
-        if (empty($product_id) {
+        if (empty($product_id)) {
             $error = "Please select an investment product";
         } elseif (empty($amount) || !is_numeric($amount) || $amount <= 0) {
             $error = "Please enter a valid investment amount";
