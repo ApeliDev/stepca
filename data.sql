@@ -464,3 +464,23 @@ CREATE TABLE `wallet_balances` (
   UNIQUE KEY `user_currency` (`user_id`,`currency`),
   CONSTRAINT `wallet_balances_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `deposits` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `merchant_request_id` varchar(100) DEFAULT NULL,
+  `checkout_request_id` varchar(100) DEFAULT NULL,
+  `mpesa_code` varchar(50) DEFAULT NULL,
+  `status` enum('pending','processing','completed','failed') DEFAULT 'pending',
+  `failure_reason` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `processed_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `merchant_request_id` (`merchant_request_id`),
+  KEY `checkout_request_id` (`checkout_request_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

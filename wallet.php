@@ -346,8 +346,6 @@ $total_earned = $stmt->fetchColumn();
             </main>
         </div>
     </div>
-
-    <script src="assets/js/wallet.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
