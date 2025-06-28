@@ -61,6 +61,15 @@
                     Professional financial services for merchants, agents, and businesses. 
                     Exchange dollars, load crypto wallets, and manage your transactions securely.
                 </p>
+                <div class="mb-8">
+                    <div class="bg-green-600 bg-opacity-20 border border-green-500 rounded-lg p-4 flex items-center space-x-4">
+                        <i class="fas fa-gift text-2xl text-green-400"></i>
+                        <div>
+                            <span class="font-semibold text-green-400">Register with KES 500 and get full access to all features!</span><br>
+                            <span class="text-gray-200 text-sm">Earn a <span class="font-bold text-green-300">KES 200 bonus</span> for every friend you refer who registers.</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <a href="register.php" class="px-6 py-3 bg-green-500 rounded-lg font-semibold text-center hover:bg-green-600 transition">
                         <i class="fas fa-user-tie mr-2"></i> Become a Merchant
