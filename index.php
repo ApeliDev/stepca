@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stepcashier - Earn Money Through Referrals | Direct M-Pesa Withdrawals</title>
-    <meta name="description" content="Join Stepcashier to earn money through referrals. Get direct M-Pesa withdrawals with a minimum of KES 100. Start earning today!">
+    <title>Stepcashier - Merchant Services & Crypto Loading | Dollar Exchange</title>
+    <meta name="description" content="Stepcashier provides merchant services, dollar exchange, and crypto loading solutions for businesses and agents in Kenya.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -18,6 +18,15 @@
         .gradient-bg {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         }
+        .service-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.1);
+            border-color: rgba(76, 175, 80, 0.5);
+        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen text-white">
@@ -29,8 +38,9 @@
         </div>
         <div class="hidden md:flex space-x-6">
             <a href="#" class="hover:text-green-400">Home</a>
-            <a href="#how-it-works" class="hover:text-green-400">How It Works</a>
-            <a href="#features" class="hover:text-green-400">Features</a>
+            <a href="#services" class="hover:text-green-400">Services</a>
+            <a href="#exchange" class="hover:text-green-400">Dollar Exchange</a>
+            <a href="#crypto" class="hover:text-green-400">Crypto Loading</a>
             <a href="#faq" class="hover:text-green-400">FAQ</a>
         </div>
         <div class="flex space-x-4">
@@ -44,38 +54,20 @@
         <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-12 md:mb-0">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">
-                    Earn Money Through <span class="text-green-500">Referrals</span> 
-                    <br>With Direct <span class="text-green-500">M-Pesa</span> Withdrawals
+                    Merchant Services & <span class="text-green-500">Dollar Exchange</span> 
+                    <br>With <span class="text-green-500">Crypto Loading</span> Solutions
                 </h1>
                 <p class="text-lg text-gray-300 mb-8">
-                    Join Kenya's fastest growing referral network. Earn KES 200 per referral 
-                    and withdraw directly to M-Pesa with just KES 100 minimum.
+                    Professional financial services for merchants, agents, and businesses. 
+                    Exchange dollars, load crypto wallets, and manage your transactions securely.
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <a href="register.php" class="px-6 py-3 bg-green-500 rounded-lg font-semibold text-center hover:bg-green-600 transition">
-                        <i class="fas fa-user-plus mr-2"></i> Get Started Now
+                        <i class="fas fa-user-tie mr-2"></i> Become a Merchant
                     </a>
-                    <a href="#how-it-works" class="px-6 py-3 border border-green-500 rounded-lg font-semibold text-center hover:bg-green-900 transition">
-                        <i class="fas fa-play-circle mr-2"></i> How It Works
+                    <a href="register.php" class="px-6 py-3 border border-green-500 rounded-lg font-semibold text-center hover:bg-green-900 transition">
+                        <i class="fas fa-exchange-alt mr-2"></i> Exchange Rates
                     </a>
-                </div>
-                <div class="mt-8 flex items-center">
-                    <div class="flex -space-x-2">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full border-2 border-green-500">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-green-500">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-10 h-10 rounded-full border-2 border-green-500">
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-300">Join <span class="font-bold">12,500+</span> members earning daily</p>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <span class="text-sm ml-1">4.9/5</span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="md:w-1/2 flex justify-center">
@@ -85,55 +77,26 @@
                     <div class="relative bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl p-6 border border-green-500 border-opacity-30 shadow-lg">
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-wallet text-white text-xl"></i>
+                                <i class="fas fa-chart-line text-white text-xl"></i>
                             </div>
-                            <h3 class="text-xl font-bold">Recent Withdrawals</h3>
+                            <h3 class="text-xl font-bold">Today's Exchange Rates</h3>
                         </div>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-10 h-10 rounded-full mr-3">
-                                    <div>
-                                        <p class="font-medium">Sarah K.</p>
-                                        <p class="text-sm text-gray-400">5 minutes ago</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-green-400">KES 1,200</p>
-                                    <p class="text-xs text-gray-400">M-Pesa</p>
-                                </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between p-3 bg-gray-700 rounded-lg">
+                                <span>USD → KES</span>
+                                <span class="font-bold text-green-400">1 : 132.50</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-10 h-10 rounded-full mr-3">
-                                    <div>
-                                        <p class="font-medium">James M.</p>
-                                        <p class="text-sm text-gray-400">12 minutes ago</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-green-400">KES 2,500</p>
-                                    <p class="text-xs text-gray-400">M-Pesa</p>
-                                </div>
+                            <div class="flex justify-between p-3 bg-gray-700 rounded-lg">
+                                <span>EUR → KES</span>
+                                <span class="font-bold text-green-400">1 : 145.20</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
-                                <div class="flex items-center">
-                                    <img src="https://randomuser.me/api/portraits/women/33.jpg" class="w-10 h-10 rounded-full mr-3">
-                                    <div>
-                                        <p class="font-medium">Grace W.</p>
-                                        <p class="text-sm text-gray-400">18 minutes ago</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="font-bold text-green-400">KES 3,000</p>
-                                    <p class="text-xs text-gray-400">M-Pesa</p>
-                                </div>
+                            <div class="flex justify-between p-3 bg-gray-700 rounded-lg">
+                                <span>GBP → KES</span>
+                                <span class="font-bold text-green-400">1 : 165.75</span>
                             </div>
                         </div>
-                        <div class="mt-6 text-center">
-                            <a href="register.php" class="inline-block px-4 py-2 bg-green-500 rounded hover:bg-green-600 transition">
-                                Start Earning Now
-                            </a>
+                        <div class="mt-4 text-sm text-gray-400 text-right">
+                            Rates updated: 12:45 PM
                         </div>
                     </div>
                 </div>
@@ -146,226 +109,400 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-green-500 mb-2">12,500+</div>
-                    <p class="text-gray-300">Active Members</p>
+                    <div class="text-4xl font-bold text-green-500 mb-2">850+</div>
+                    <p class="text-gray-300">Active Merchants</p>
                 </div>
                 <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-green-500 mb-2">KES 8.5M+</div>
-                    <p class="text-gray-300">Paid Out</p>
+                    <div class="text-4xl font-bold text-green-500 mb-2">KES 25M+</div>
+                    <p class="text-gray-300">Monthly Volume</p>
                 </div>
                 <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-green-500 mb-2">32,000+</div>
-                    <p class="text-gray-300">Referrals</p>
+                    <div class="text-4xl font-bold text-green-500 mb-2">98%</div>
+                    <p class="text-gray-300">Success Rate</p>
                 </div>
                 <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-green-500 mb-2">5 min</div>
-                    <p class="text-gray-300">Avg. Withdrawal Time</p>
+                    <div class="text-4xl font-bold text-green-500 mb-2">24/7</div>
+                    <p class="text-gray-300">Support</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="container mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-center mb-4">How <span class="text-green-500">Stepcashier</span> Works</h2>
+    <!-- Services Section -->
+    <section id="services" class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-4">Our <span class="text-green-500">Merchant Services</span></h2>
         <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
-            Start earning in just 3 simple steps. Our platform makes it easy to make money through referrals.
-        </p>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Step 1 -->
-            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
-                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">1</div>
-                <h3 class="text-xl font-bold text-center mb-3">Register & Pay</h3>
-                <p class="text-gray-300 text-center">
-                    Create your account with a one-time registration fee of KES 500 to activate your earning potential.
-                </p>
-            </div>
-            
-            <!-- Step 2 -->
-            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
-                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">2</div>
-                <h3 class="text-xl font-bold text-center mb-3">Share Your Link</h3>
-                <p class="text-gray-300 text-center">
-                    Share your unique referral link with friends and earn KES 200 for each successful registration.
-                </p>
-            </div>
-            
-            <!-- Step 3 -->
-            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
-                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">3</div>
-                <h3 class="text-xl font-bold text-center mb-3">Withdraw to M-Pesa</h3>
-                <p class="text-gray-300 text-center">
-                    Withdraw your earnings directly to M-Pesa with just KES 100 minimum. Maximum KES 20,000 per day.
-                </p>
-            </div>
-        </div>
-        
-        <div class="mt-12 text-center">
-            <a href="register.php" class="inline-block px-8 py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
-                <i class="fas fa-play mr-2"></i> Get Started Now
-            </a>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="bg-gray-800 py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4">Why Choose <span class="text-green-500">Stepcashier</span></h2>
-            <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
-                We provide the best platform for earning through referrals with instant M-Pesa withdrawals.
-            </p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Instant Withdrawals</h3>
-                    <p class="text-gray-300">
-                        Get your money fast with direct M-Pesa withdrawals processed within minutes. Minimum withdrawal just KES 100.
-                    </p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Real-time Tracking</h3>
-                    <p class="text-gray-300">
-                        Monitor your earnings and referrals in real-time with our comprehensive dashboard.
-                    </p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Referral Tools</h3>
-                    <p class="text-gray-300">
-                        Get custom referral links, banners, and tracking tools to maximize your earnings.
-                    </p>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Secure Platform</h3>
-                    <p class="text-gray-300">
-                        Your data and earnings are protected with bank-level security measures.
-                    </p>
-                </div>
-                
-                <!-- Feature 5 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
-                    <p class="text-gray-300">
-                        Our dedicated support team is always available to help you with any questions.
-                    </p>
-                </div>
-                
-                <!-- Feature 6 -->
-                <div class="bg-gray-900 rounded-xl p-6 hover:shadow-lg transition">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-xl mb-4">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Bonus Rewards</h3>
-                    <p class="text-gray-300">
-                        Earn extra bonuses for reaching referral milestones and special promotions.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="container mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold text-center mb-4">What Our <span class="text-green-500">Members</span> Say</h2>
-        <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
-            Hear from people who are already earning with Stepcashier
+            Comprehensive financial solutions tailored for businesses and agents
         </p>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Testimonial 1 -->
-            <div class="bg-gray-800 rounded-xl p-6">
-                <div class="flex items-center mb-4">
-                    <img src="https://randomuser.me/api/portraits/women/32.jpg" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-bold">Grace M.</h4>
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
+            <!-- Service 1 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
-                <p class="text-gray-300">
-                    "I've earned over KES 15,000 in just two months by sharing my referral link with friends. The withdrawals to M-Pesa are instant!"
+                <h3 class="text-xl font-bold mb-3">Dollar Exchange</h3>
+                <p class="text-gray-300 mb-4">
+                    Competitive USD to KES exchange rates for merchants with high volume needs.
                 </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Best market rates
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Bulk exchange available
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Secure transactions
+                    </li>
+                </ul>
             </div>
             
-            <!-- Testimonial 2 -->
-            <div class="bg-gray-800 rounded-xl p-6">
-                <div class="flex items-center mb-4">
-                    <img src="https://randomuser.me/api/portraits/men/54.jpg" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-bold">David K.</h4>
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
+            <!-- Service 2 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fab fa-bitcoin"></i>
                 </div>
-                <p class="text-gray-300">
-                    "The KES 500 registration fee was worth it. I made that back in my first week and now earn passive income from referrals."
+                <h3 class="text-xl font-bold mb-3">Crypto Loading</h3>
+                <p class="text-gray-300 mb-4">
+                    Load crypto wallets with USDT, Bitcoin, and other major cryptocurrencies.
                 </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Multiple crypto options
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Instant wallet funding
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Competitive fees
+                    </li>
+                </ul>
             </div>
             
-            <!-- Testimonial 3 -->
-            <div class="bg-gray-800 rounded-xl p-6">
-                <div class="flex items-center mb-4">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-bold">Sarah W.</h4>
-                        <div class="flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
+            <!-- Service 3 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fas fa-user-shield"></i>
                 </div>
-                <p class="text-gray-300">
-                    "I love how easy it is to withdraw to M-Pesa. The minimum of KES 100 means I can access my money whenever I need it."
+                <h3 class="text-xl font-bold mb-3">Agent Network</h3>
+                <p class="text-gray-300 mb-4">
+                    Join our agent network and earn commissions on every transaction.
                 </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Attractive commissions
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Dedicated support
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Marketing materials
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">M-Pesa Integration</h3>
+                <p class="text-gray-300 mb-4">
+                    Seamless M-Pesa integration for your business transactions.
+                </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Instant deposits
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Bulk payments
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Transaction reports
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Currency Conversion</h3>
+                <p class="text-gray-300 mb-4">
+                    Convert between multiple currencies with competitive rates.
+                </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        USD, EUR, GBP supported
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Low conversion fees
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Fast processing
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="service-card bg-gray-800 rounded-xl p-6">
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Secure Transactions</h3>
+                <p class="text-gray-300 mb-4">
+                    Enterprise-grade security for all your financial transactions.
+                </p>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Encrypted transfers
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        2FA authentication
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        Fraud protection
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="bg-green-500 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to Start Earning?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">
-                Join thousands of Kenyans who are making money with Stepcashier today
-            </p>
-            <a href="register.php" class="inline-block px-8 py-3 bg-white text-green-500 rounded-lg font-bold hover:bg-gray-100 transition">
-                Get Started Now - It's Free!
+    <!-- Exchange Section -->
+    <section id="exchange" class="bg-gray-800 py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-4">Dollar <span class="text-green-500">Exchange Services</span></h2>
+                    <p class="text-gray-300 mb-6">
+                        Get the best USD to KES exchange rates for your business. Our merchant services provide:
+                    </p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <span>Competitive rates better than banks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <span>Bulk exchange for high volumes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <span>Same-day settlement</span>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <span>Dedicated account manager</span>
+                        </li>
+                    </ul>
+                    <a href="register.php" class="inline-block px-6 py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+                        <i class="fas fa-user-tie mr-2"></i> Apply for Merchant Account
+                    </a>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <div class="bg-gray-900 rounded-xl p-6 border border-green-500 border-opacity-30">
+                        <h3 class="text-xl font-bold mb-4">Exchange Rate Calculator</h3>
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2">Amount</label>
+                            <div class="relative">
+                                <input type="number" class="w-full bg-gray-800 rounded-lg py-3 px-4 pr-16" placeholder="Enter amount">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <span class="text-gray-400">USD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2">Convert to</label>
+                            <select class="w-full bg-gray-800 rounded-lg py-3 px-4">
+                                <option>Kenya Shilling (KES)</option>
+                                <option>Euro (EUR)</option>
+                                <option>British Pound (GBP)</option>
+                            </select>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Exchange Rate</span>
+                                <span class="font-bold">1 USD = 132.50 KES</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">You Receive</span>
+                                <span class="text-green-500 font-bold text-xl">13,250 KES</span>
+                            </div>
+                        </div>
+                        <button class="w-full py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+                            Exchange Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crypto Section -->
+    <section id="crypto" class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-4">Crypto <span class="text-green-500">Loading Services</span></h2>
+        <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
+            Load your crypto wallets instantly with our secure platform
+        </p>
+        
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <!-- Crypto 1 -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
+                <div class="flex items-center mb-4">
+                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" class="w-10 h-10 mr-4">
+                    <h3 class="text-xl font-bold">USDT Loading</h3>
+                </div>
+                <p class="text-gray-300 mb-4">
+                    Load USDT (Tether) to your wallet with competitive rates and fast processing.
+                </p>
+                <div class="text-sm text-gray-400">
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Network</span>
+                        <span>TRC20, ERC20</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Minimum</span>
+                        <span>$50 equivalent</span>
+                    </div>
+                    <div class="flex justify-between py-2">
+                        <span>Processing Time</span>
+                        <span>5-15 minutes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crypto 2 -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
+                <div class="flex items-center mb-4">
+                    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" class="w-10 h-10 mr-4">
+                    <h3 class="text-xl font-bold">Bitcoin Loading</h3>
+                </div>
+                <p class="text-gray-300 mb-4">
+                    Buy and load Bitcoin to your wallet with secure transactions.
+                </p>
+                <div class="text-sm text-gray-400">
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Network</span>
+                        <span>Bitcoin</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Minimum</span>
+                        <span>$100 equivalent</span>
+                    </div>
+                    <div class="flex justify-between py-2">
+                        <span>Processing Time</span>
+                        <span>15-30 minutes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crypto 3 -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-green-500 border-opacity-20 hover:border-opacity-50 transition">
+                <div class="flex items-center mb-4">
+                    <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" class="w-10 h-10 mr-4">
+                    <h3 class="text-xl font-bold">Ethereum Loading</h3>
+                </div>
+                <p class="text-gray-300 mb-4">
+                    Load Ethereum to your wallet with competitive rates.
+                </p>
+                <div class="text-sm text-gray-400">
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Network</span>
+                        <span>ERC20</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b border-gray-700">
+                        <span>Minimum</span>
+                        <span>$75 equivalent</span>
+                    </div>
+                    <div class="flex justify-between py-2">
+                        <span>Processing Time</span>
+                        <span>10-20 minutes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="register.php" class="inline-block px-8 py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+                <i class="fas fa-coins mr-2"></i> Start Loading Crypto Now
             </a>
+        </div>
+    </section>
+
+    <!-- Agent Benefits Section -->
+    <section class="bg-gray-800 py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Agent working" class="rounded-xl shadow-lg">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-4">Become a <span class="text-green-500">Stepcashier Agent</span></h2>
+                    <p class="text-gray-300 mb-6">
+                        Join our network of agents and earn commissions on every transaction you facilitate.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                <i class="fas fa-money-bill-wave text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Earn Attractive Commissions</h4>
+                                <p class="text-gray-400 text-sm">Get paid for every dollar exchange and crypto loading transaction you bring to the platform.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                <i class="fas fa-tools text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Full Agent Toolkit</h4>
+                                <p class="text-gray-400 text-sm">Get access to marketing materials, rate calculators, and transaction tracking tools.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                <i class="fas fa-headset text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Dedicated Support</h4>
+                                <p class="text-gray-400 text-sm">Our support team is available 24/7 to help you with any questions or issues.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="register.php" class="inline-block px-6 py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+                        <i class="fas fa-user-plus mr-2"></i> Apply to Become an Agent
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -373,63 +510,81 @@
     <section id="faq" class="container mx-auto px-4 py-16">
         <h2 class="text-3xl font-bold text-center mb-4">Frequently Asked <span class="text-green-500">Questions</span></h2>
         <p class="text-center text-gray-300 max-w-2xl mx-auto mb-12">
-            Find answers to common questions about Stepcashier
+            Find answers to common questions about our merchant services
         </p>
         
         <div class="max-w-3xl mx-auto">
             <!-- FAQ 1 -->
             <div class="mb-4 border-b border-gray-700 pb-4">
                 <button class="flex justify-between items-center w-full text-left">
-                    <h3 class="text-lg font-semibold">How much does it cost to join Stepcashier?</h3>
+                    <h3 class="text-lg font-semibold">How do I become a Stepcashier merchant?</h3>
                     <i class="fas fa-chevron-down transition-transform"></i>
                 </button>
                 <div class="mt-2 text-gray-300 hidden">
-                    There's a one-time registration fee of KES 500 to activate your account. After that, you can start earning immediately with no additional costs.
+                    To become a merchant, register for an account and complete the merchant application process. You'll need to provide some business documentation and go through a verification process. Once approved, you'll gain access to all merchant services.
                 </div>
             </div>
             
             <!-- FAQ 2 -->
             <div class="mb-4 border-b border-gray-700 pb-4">
                 <button class="flex justify-between items-center w-full text-left">
-                    <h3 class="text-lg font-semibold">How do I withdraw my earnings?</h3>
+                    <h3 class="text-lg font-semibold">What are the fees for dollar exchange?</h3>
                     <i class="fas fa-chevron-down transition-transform"></i>
                 </button>
                 <div class="mt-2 text-gray-300 hidden">
-                    Simply go to the withdrawals section in your dashboard, enter your M-Pesa number and the amount (minimum KES 100). The money will be sent directly to your M-Pesa account within minutes.
+                    Our exchange fees vary based on volume and market conditions. Registered merchants get access to our most competitive rates. Please contact our support team for current fee structures.
                 </div>
             </div>
             
             <!-- FAQ 3 -->
             <div class="mb-4 border-b border-gray-700 pb-4">
                 <button class="flex justify-between items-center w-full text-left">
-                    <h3 class="text-lg font-semibold">How much can I earn per referral?</h3>
+                    <h3 class="text-lg font-semibold">How long do crypto loading transactions take?</h3>
                     <i class="fas fa-chevron-down transition-transform"></i>
                 </button>
                 <div class="mt-2 text-gray-300 hidden">
-                    You earn KES 200 for every successful referral who joins Stepcashier through your link and pays the registration fee.
+                    Most crypto loading transactions are completed within 5-30 minutes depending on the cryptocurrency and network congestion. USDT transactions are typically the fastest.
                 </div>
             </div>
             
             <!-- FAQ 4 -->
             <div class="mb-4 border-b border-gray-700 pb-4">
                 <button class="flex justify-between items-center w-full text-left">
-                    <h3 class="text-lg font-semibold">Is there a daily withdrawal limit?</h3>
+                    <h3 class="text-lg font-semibold">What's the minimum amount for dollar exchange?</h3>
                     <i class="fas fa-chevron-down transition-transform"></i>
                 </button>
                 <div class="mt-2 text-gray-300 hidden">
-                    Yes, the maximum you can withdraw per day is KES 20,000. This is a security measure to protect our users.
+                    The minimum exchange amount is $100 or equivalent for standard customers. Registered merchants can exchange smaller amounts starting from $50.
                 </div>
             </div>
             
             <!-- FAQ 5 -->
             <div class="mb-4 border-b border-gray-700 pb-4">
                 <button class="flex justify-between items-center w-full text-left">
-                    <h3 class="text-lg font-semibold">How do I track my referrals?</h3>
+                    <h3 class="text-lg font-semibold">How do agent commissions work?</h3>
                     <i class="fas fa-chevron-down transition-transform"></i>
                 </button>
                 <div class="mt-2 text-gray-300 hidden">
-                    Your dashboard shows real-time statistics of your referrals, including who signed up and when they made their first payment.
+                    Agents earn a percentage commission on every transaction they facilitate. Commission rates vary by service type and volume, with higher volumes earning better rates.
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-green-500 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Grow Your Business?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Join our network of merchants and agents today
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="register.php" class="px-8 py-3 bg-white text-green-500 rounded-lg font-bold hover:bg-gray-100 transition">
+                    Apply as Merchant
+                </a>
+                <a href="register.php" class="px-8 py-3 border border-white text-white rounded-lg font-bold hover:bg-green-600 transition">
+                    Become an Agent
+                </a>
             </div>
         </div>
     </section>
@@ -444,7 +599,7 @@
                         <span class="text-xl font-bold">Step<span class="text-green-500">cashier</span></span>
                     </div>
                     <p class="text-gray-400 mb-4">
-                        Kenya's fastest growing referral network with direct M-Pesa withdrawals.
+                        Professional merchant services and financial solutions for businesses and agents.
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-green-500 transition">
@@ -463,26 +618,27 @@
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Home</a></li>
-                        <li><a href="#how-it-works" class="text-gray-400 hover:text-green-500 transition">How It Works</a></li>
-                        <li><a href="#features" class="text-gray-400 hover:text-green-500 transition">Features</a></li>
-                        <li><a href="#faq" class="text-gray-400 hover:text-green-500 transition">FAQ</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-green-500 transition">Merchant Services</a></li>
+                        <li><a href="#exchange" class="text-gray-400 hover:text-green-500 transition">Dollar Exchange</a></li>
+                        <li><a href="#crypto" class="text-gray-400 hover:text-green-500 transition">Crypto Loading</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Agent Network</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Refund Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-green-500 transition">Blog</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
                     <ul class="space-y-2">
                         <li class="flex items-center">
                             <i class="fas fa-envelope text-gray-400 mr-2"></i>
@@ -525,46 +681,23 @@
             });
         });
         
-        // Animate counters
-        function animateCounter(element, target, duration = 2000) {
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    clearInterval(timer);
-                    current = target;
+        // Exchange calculator functionality
+        const exchangeInput = document.querySelector('#exchange input[type="number"]');
+        if (exchangeInput) {
+            exchangeInput.addEventListener('input', () => {
+                const amount = parseFloat(exchangeInput.value) || 0;
+                const rate = 132.50;
+                const resultElement = document.querySelector('#exchange .text-xl');
+                if (resultElement) {
+                    resultElement.textContent = (amount * rate).toLocaleString('en-KE', {
+                        style: 'currency',
+                        currency: 'KES',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).replace('KES', '') + ' KES';
                 }
-                element.textContent = Math.floor(current).toLocaleString();
-            }, 16);
+            });
         }
-        
-        // Start counters when scrolled to stats section
-        function startCountersWhenVisible() {
-            const statsSection = document.querySelector('.stats-section');
-            if (!statsSection) return;
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        document.querySelectorAll('.stats-section .text-4xl').forEach(el => {
-                            const target = parseInt(el.textContent.replace(/[^0-9]/g, ''));
-                            animateCounter(el, target);
-                        });
-                        observer.disconnect();
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            observer.observe(statsSection);
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            startCountersWhenVisible();
-        });
     </script>
 </body>
 </html>
