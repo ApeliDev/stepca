@@ -981,26 +981,26 @@ class MpesaPayment {
      * @param string $phone Phone number to format
      * @return string Formatted phone number
      */
-    private function formatPhone($phone) {
-        // Remove all non-digit characters
-        $phone = preg_replace('/[^0-9]/', '', $phone);
-        
-        // Handle different formats:
-        if (strpos($phone, '0') === 0 && strlen($phone) === 10) {
-            // Format like 0703416091 → 254703416091
-            return '254' . substr($phone, 1);
-        } elseif (strpos($phone, '254') === 0 && strlen($phone) === 12) {
-            // Already in 254 format
+    public function formatPhone($phone) {
+        // Remove any non-digit characters
+        $phone = preg_replace('/\D/', '', $phone);
+
+        // If phone starts with '0', replace with '254'
+        if (strpos($phone, '0') === 0) {
+            $phone = '254' . substr($phone, 1);
+        }
+
+        // If phone starts with '254' and is 12 digits, return as is
+        if (strpos($phone, '254') === 0 && strlen($phone) == 12) {
             return $phone;
-        } elseif (strpos($phone, '+254') === 0 && strlen($phone) === 13) {
-            // Format like +254740640525 → 254740640525
-            return substr($phone, 1);
-        } elseif (strlen($phone) === 9) {
-            // Format like 703416091 → 254703416091
+        }
+
+        // If phone starts with '7' and is 9 digits, add '254'
+        if (strpos($phone, '7') === 0 && strlen($phone) == 9) {
             return '254' . $phone;
         }
-        
-        // Default - return as is (will fail validation)
+
+        // Otherwise, return as is (or handle as needed)
         return $phone;
     }
 
