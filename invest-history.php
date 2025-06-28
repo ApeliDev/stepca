@@ -37,7 +37,54 @@ $investments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Same head section as investments.php -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITE_NAME; ?> - My Investments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4CAF50',
+                        primaryDark: '#45a049',
+                        dark: '#0f0f23',
+                        darker: '#1a1a2e',
+                        darkest: '#16213e',
+                        lightGray: '#9CA3AF',
+                        lighterGray: '#D1D5DB',
+                    },
+                    animation: {
+                        float: 'float 6s ease-in-out infinite',
+                        slideIn: 'slideIn 0.3s ease-out',
+                        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        fadeIn: 'fadeIn 0.5s ease-out',
+                        scaleIn: 'scaleIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '33%': { transform: 'translateY(-20px) rotate(5deg)' },
+                            '66%': { transform: 'translateY(10px) rotate(-3deg)' },
+                        },
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateY(-10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0' },
+                            'to': { opacity: '1' },
+                        },
+                        scaleIn: {
+                            'from': { opacity: '0', transform: 'scale(0.9)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gradient-to-br from-dark via-darker to-darkest min-h-screen text-white">
     <div class="flex h-screen relative z-10">
