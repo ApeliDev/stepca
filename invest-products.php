@@ -214,6 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                         <input 
                                             type="number" 
                                             name="amount" 
+                                            id="amountInput<?php echo $product['id']; ?>"
                                             min="<?php echo $product['min_investment_amount']; ?>" 
                                             <?php if ($product['max_investment_amount']): ?>
                                             max="<?php echo $product['max_investment_amount']; ?>"
@@ -235,15 +236,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                         <div class="px-4 py-3 bg-darker/50 border border-primary/20 rounded-lg">
                                             <div class="flex justify-between mb-2">
                                                 <span>Principal:</span>
-                                                <span id="principalAmount">KES 0.00</span>
+                                                <span id="principalAmount<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
                                             <div class="flex justify-between mb-2">
                                                 <span>Interest (@<?php echo $product['expected_return_rate']; ?>%):</span>
-                                                <span id="interestAmount">KES 0.00</span>
+                                                <span id="interestAmount<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
                                             <div class="flex justify-between font-semibold text-primary">
                                                 <span>Total Return:</span>
-                                                <span id="totalReturn">KES 0.00</span>
+                                                <span id="totalReturn<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
                                         </div>
                                         <p class="text-xs text-lightGray mt-1">
@@ -258,25 +259,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                     >
                                         Confirm Investment
                                     </button>
+                                    <script>
+                                        document.getElementById('amountInput<?php echo $product['id']; ?>').addEventListener('input', function(e) {
+                                            const amount = parseFloat(e.target.value) || 0;
+                                            const rate = <?php echo $product['expected_return_rate'] / 50; ?>;
+                                            const days = <?php echo $product['return_period_days']; ?>;
+                                            
+                                            // Simple interest calculation
+                                            const interest = amount * rate * (days / 365);
+                                            const total = amount + interest;
+                                            
+                                            document.getElementById('principalAmount<?php echo $product['id']; ?>').textContent = 'KES ' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                                            document.getElementById('interestAmount<?php echo $product['id']; ?>').textContent = 'KES ' + interest.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                                            document.getElementById('totalReturn<?php echo $product['id']; ?>').textContent = 'KES ' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                                        });
+                                    </script>
                                 </form>
                             </dialog>
-                            
-                            <script>
-                                // Calculate expected return as user types amount
-                                document.querySelector('#investModal<?php echo $product['id']; ?> input[name="amount"]').addEventListener('input', function(e) {
-                                    const amount = parseFloat(e.target.value) || 0;
-                                    const rate = <?php echo $product['expected_return_rate'] / 50; ?>;
-                                    const days = <?php echo $product['return_period_days']; ?>;
-                                    
-                                    // Simple interest calculation
-                                    const interest = amount * rate * (days / 365);
-                                    const total = amount + interest;
-                                    
-                                    document.getElementById('principalAmount').textContent = 'KES ' + amount.toFixed(2);
-                                    document.getElementById('interestAmount').textContent = 'KES ' + interest.toFixed(2);
-                                    document.getElementById('totalReturn').textContent = 'KES ' + total.toFixed(2);
-                                });
-                            </script>
                         </div>
                     <?php endforeach; ?>
                 </div>
