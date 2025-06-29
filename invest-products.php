@@ -47,22 +47,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
     } elseif ($amount > $user['balance']) {
         $_SESSION['error'] = "Insufficient balance for this investment";
     } else {
-        // Calculate expected return
+        // Calculate expected return with compound interest
         $return_rate = $product['expected_return_rate'] / 100;
-        $return_period = $product['return_period_days'] / 365; // Convert to years
-        $expected_return = $amount * (1 + ($return_rate * $return_period));
+        $days = $product['return_period_days'];
+        
+        // Compound interest calculation based on compounding frequency
+        switch ($product['compounding_frequency']) {
+            case 'daily':
+                $n = 365;
+                $periods = $days;
+                break;
+            case 'weekly':
+                $n = 52;
+                $periods = $days / 7;
+                break;
+            case 'monthly':
+                $n = 12;
+                $periods = $days / 30;
+                break;
+            case 'quarterly':
+                $n = 4;
+                $periods = $days / 90;
+                break;
+            default: // monthly by default
+                $n = 12;
+                $periods = $days / 30;
+        }
+        
+        $expected_return = $amount * pow((1 + ($return_rate/$n)), $periods);
+        
+        // Calculate loyalty bonus
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM investments WHERE user_id = ? AND status = 'completed'");
+        $stmt->execute([$user_id]);
+        $previous_investments = $stmt->fetchColumn();
+        
+        $loyalty_bonus = 0;
+        if ($previous_investments > 0) {
+            $loyalty_bonus = min($product['loyalty_bonus_rate']/100 * $previous_investments, 0.05);
+            $expected_return *= (1 + $loyalty_bonus);
+        }
+        
+        // Calculate large investment bonus
+        $large_bonus = 0;
+        if ($amount >= $product['large_investment_bonus_threshold']) {
+            $large_bonus = $product['large_investment_bonus_rate']/100;
+            $expected_return *= (1 + $large_bonus);
+        }
         
         // Calculate dates
         $start_date = date('Y-m-d');
-        $maturity_date = date('Y-m-d', strtotime("+{$product['return_period_days']} days"));
+        $maturity_date = date('Y-m-d', strtotime("+{$days} days"));
         
         // Create investment
         $stmt = $conn->prepare("
             INSERT INTO investments 
-            (user_id, product_id, amount, currency, expected_return_amount, start_date, maturity_date, status)
-            VALUES (?, ?, ?, 'KES', ?, ?, ?, 'active')
+            (user_id, product_id, amount, currency, expected_return_amount, 
+             start_date, maturity_date, status, loyalty_bonus_rate, large_investment_bonus_rate)
+            VALUES (?, ?, ?, 'KES', ?, ?, ?, 'active', ?, ?)
         ");
-        $stmt->execute([$user_id, $product_id, $amount, $expected_return, $start_date, $maturity_date]);
+        $stmt->execute([
+            $user_id, 
+            $product_id, 
+            $amount, 
+            $expected_return, 
+            $start_date, 
+            $maturity_date,
+            $loyalty_bonus * 100,
+            $large_bonus * 100
+        ]);
         
         // Deduct from user balance
         $stmt = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
@@ -79,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITE_NAME; ?> - My Investments</title>
+    <title><?php echo SITE_NAME; ?> - Investment Products</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -175,6 +227,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                     <span class="text-white font-semibold"><?php echo $product['expected_return_rate']; ?>%</span>
                                 </div>
                                 <div class="flex justify-between">
+                                    <span class="text-lightGray text-sm">Compounding</span>
+                                    <span class="text-white font-semibold"><?php echo ucfirst($product['compounding_frequency']); ?></span>
+                                </div>
+                                <div class="flex justify-between">
                                     <span class="text-lightGray text-sm">Duration</span>
                                     <span class="text-white font-semibold"><?php echo $product['return_period_days']; ?> days</span>
                                 </div>
@@ -186,6 +242,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                 <div class="flex justify-between">
                                     <span class="text-lightGray text-sm">Max Investment</span>
                                     <span class="text-white font-semibold">KES <?php echo number_format($product['max_investment_amount'], 2); ?></span>
+                                </div>
+                                <?php endif; ?>
+                                <?php if ($product['large_investment_bonus_threshold'] > 0): ?>
+                                <div class="flex justify-between">
+                                    <span class="text-lightGray text-sm">Large Investment Bonus</span>
+                                    <span class="text-white font-semibold">KES <?php echo number_format($product['large_investment_bonus_threshold'], 2); ?>+ gets <?php echo $product['large_investment_bonus_rate']; ?>%</span>
+                                </div>
+                                <?php endif; ?>
+                                <?php if ($product['loyalty_bonus_rate'] > 0): ?>
+                                <div class="flex justify-between">
+                                    <span class="text-lightGray text-sm">Loyalty Bonus</span>
+                                    <span class="text-white font-semibold"><?php echo $product['loyalty_bonus_rate']; ?>% per previous investment</span>
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -221,6 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                             step="0.01"
                                             class="w-full px-4 py-2 bg-darker border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50"
                                             required
+                                            oninput="calculateReturn(<?php echo $product['id']; ?>, <?php echo $product['expected_return_rate']; ?>, <?php echo $product['return_period_days']; ?>, '<?php echo $product['compounding_frequency']; ?>', <?php echo $product['loyalty_bonus_rate']; ?>, <?php echo $product['large_investment_bonus_threshold']; ?>, <?php echo $product['large_investment_bonus_rate']; ?>)"
                                         >
                                         <p class="text-xs text-lightGray mt-1">
                                             Min: KES <?php echo number_format($product['min_investment_amount'], 2); ?>
@@ -231,19 +300,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                     </div>
                                     
                                     <div class="mb-6">
-                                        <label class="block text-lightGray text-sm mb-2">Expected Return</label>
+                                        <label class="block text-lightGray text-sm mb-2">Projected Returns</label>
                                         <div class="px-4 py-3 bg-darker/50 border border-primary/20 rounded-lg">
                                             <div class="flex justify-between mb-2">
                                                 <span>Principal:</span>
-                                                <span id="principalAmount">KES 0.00</span>
+                                                <span id="principalAmount<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
                                             <div class="flex justify-between mb-2">
-                                                <span>Interest (@<?php echo $product['expected_return_rate']; ?>%):</span>
-                                                <span id="interestAmount">KES 0.00</span>
+                                                <span>Base Interest:</span>
+                                                <span id="baseInterest<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
-                                            <div class="flex justify-between font-semibold text-primary">
+                                            <div class="flex justify-between mb-2 text-yellow-400" id="loyaltyBonusRow<?php echo $product['id']; ?>" style="display: none;">
+                                                <span>Loyalty Bonus:</span>
+                                                <span id="loyaltyBonus<?php echo $product['id']; ?>">KES 0.00</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2 text-green-400" id="largeBonusRow<?php echo $product['id']; ?>" style="display: none;">
+                                                <span>Large Investment Bonus:</span>
+                                                <span id="largeBonus<?php echo $product['id']; ?>">KES 0.00</span>
+                                            </div>
+                                            <div class="flex justify-between font-semibold text-primary border-t border-primary/20 pt-2 mt-2">
                                                 <span>Total Return:</span>
-                                                <span id="totalReturn">KES 0.00</span>
+                                                <span id="totalReturn<?php echo $product['id']; ?>">KES 0.00</span>
                                             </div>
                                         </div>
                                         <p class="text-xs text-lightGray mt-1">
@@ -260,23 +337,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
                                     </button>
                                 </form>
                             </dialog>
-                            
-                            <script>
-                                // Calculate expected return as user types amount
-                                document.querySelector('#investModal<?php echo $product['id']; ?> input[name="amount"]').addEventListener('input', function(e) {
-                                    const amount = parseFloat(e.target.value) || 0;
-                                    const rate = <?php echo $product['expected_return_rate'] / 100; ?>;
-                                    const days = <?php echo $product['return_period_days']; ?>;
-                                    
-                                    // Simple interest calculation
-                                    const interest = amount * rate * (days / 365);
-                                    const total = amount + interest;
-                                    
-                                    document.getElementById('principalAmount').textContent = 'KES ' + amount.toFixed(2);
-                                    document.getElementById('interestAmount').textContent = 'KES ' + interest.toFixed(2);
-                                    document.getElementById('totalReturn').textContent = 'KES ' + total.toFixed(2);
-                                });
-                            </script>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -292,6 +352,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['invest'])) {
         </div>
     </div>
 
-    <script src="assets/js/main.js"></script>
+    <script>
+        // Calculate projected returns
+        function calculateReturn(productId, annualRate, days, compounding, loyaltyRate, largeThreshold, largeRate) {
+            const amount = parseFloat(document.querySelector(`#investModal${productId} input[name="amount"]`).value) || 0;
+            
+            // Determine compounding parameters
+            let n, periods;
+            switch (compounding) {
+                case 'daily':
+                    n = 365;
+                    periods = days;
+                    break;
+                case 'weekly':
+                    n = 52;
+                    periods = days / 7;
+                    break;
+                case 'monthly':
+                    n = 12;
+                    periods = days / 30;
+                    break;
+                case 'quarterly':
+                    n = 4;
+                    periods = days / 90;
+                    break;
+                default: // monthly by default
+                    n = 12;
+                    periods = days / 30;
+            }
+            
+            // Base compound interest calculation
+            const rate = annualRate / 100;
+            const baseReturn = amount * Math.pow(1 + (rate/n), periods);
+            const baseInterest = baseReturn - amount;
+            
+            // Calculate loyalty bonus (simulate 2 previous investments for demo)
+            const previousInvestments = 2; // In real app, get this from server
+            let loyaltyBonus = 0;
+            if (previousInvestments > 0 && loyaltyRate > 0) {
+                loyaltyBonus = baseReturn * (Math.min(loyaltyRate/100 * previousInvestments, 0.05));
+                document.getElementById(`loyaltyBonusRow${productId}`).style.display = 'flex';
+                document.getElementById(`loyaltyBonus${productId}`).textContent = 'KES ' + loyaltyBonus.toFixed(2);
+            } else {
+                document.getElementById(`loyaltyBonusRow${productId}`).style.display = 'none';
+            }
+            
+            // Calculate large investment bonus
+            let largeBonus = 0;
+            if (amount >= largeThreshold && largeRate > 0) {
+                largeBonus = baseReturn * (largeRate/100);
+                document.getElementById(`largeBonusRow${productId}`).style.display = 'flex';
+                document.getElementById(`largeBonus${productId}`).textContent = 'KES ' + largeBonus.toFixed(2);
+            } else {
+                document.getElementById(`largeBonusRow${productId}`).style.display = 'none';
+            }
+            
+            // Calculate totals
+            const totalReturn = baseReturn + loyaltyBonus + largeBonus;
+            const totalInterest = baseInterest + loyaltyBonus + largeBonus;
+            
+            // Update display
+            document.getElementById(`principalAmount${productId}`).textContent = 'KES ' + amount.toFixed(2);
+            document.getElementById(`baseInterest${productId}`).textContent = 'KES ' + baseInterest.toFixed(2);
+            document.getElementById(`totalReturn${productId}`).textContent = 'KES ' + totalReturn.toFixed(2);
+        }
+    </script>
 </body>
 </html>
